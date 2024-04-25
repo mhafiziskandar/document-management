@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('/', '/manage/dashboards');
+    Route::redirect('/', '/dashboards');
     Route::get('/dashboards', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware('role:admin|executive')->prefix('admin')->name('admin.')->group(function () {
