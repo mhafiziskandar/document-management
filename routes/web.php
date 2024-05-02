@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::redirect('/', '/dashboards');
     Route::get('/dashboards', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::middleware('role:admin|executive')->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('role:superadmin|admin')->prefix('admin')->name('admin.')->group(function () {
         Route::prefix('project')->name('projects.')->group(function () {
             Route::get('', [FolderController::class, 'index'])->name('index');
             Route::get('create', [FolderController::class, 'create'])->name('create');

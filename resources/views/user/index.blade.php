@@ -8,7 +8,8 @@
             </div>
             <!--end::Title-->
             <div class="card-toolbar">
-                @livewire('admin.user-sync')
+                {{-- @livewire('admin.user-sync') --}}
+                @livewire('admin.add-user')
             </div>
         </div>
         <!--end::Card header-->

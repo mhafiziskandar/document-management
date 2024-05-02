@@ -49,7 +49,7 @@ class DashboardController extends Controller
         $countPending = User::where('status', User::PENDING)->count();
         $countDeleted = User::where('status', User::DELETE)->count();
 
-        if (auth()->user()->hasRole(['admin', 'executive'])) {
+        if (auth()->user()->hasRole(['superadmin', 'admin'])) {
 
             $countProjects = (clone $project)
                 ->when($year != "all", fn ($query) => $query->where('year', $year))
