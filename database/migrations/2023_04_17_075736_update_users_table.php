@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('password')->nullable()->change();
-            $table->unsignedBigInteger('user_id')->after('id');
             $table->string('ic_no')->nullable()->unique()->after('email');
             $table->longText('profile_image')->nullable()->after('email');
             $table->string('status')->nullable()->after('password');
