@@ -14,21 +14,13 @@ class ClusterSeeder extends Seeder
     public function run(): void
     {
         Cluster::insert([
-            [
-                'name' => 'Penyelidikan'
-            ], [
-                'name' => 'Program'
-            ], [
-                'name' => 'Penerbitan & Inovasi'
-            ], [
-                'name' => 'Parlimen'
-            ], [
-                'name' => 'Kewangan'
-            ], [
-                'name' => 'Data'
-            ], [
-                'name' => 'Dasar & Strategik'
-            ]
+            [ 'name' => 'Penyelidikan' ], 
+            [ 'name' => 'Program' ], 
+            [ 'name' => 'Penerbitan & Inovasi' ], 
+            [ 'name' => 'Parlimen' ], 
+            [ 'name' => 'Kewangan' ], 
+            [ 'name' => 'Data' ], 
+            [ 'name' => 'Dasar & Strategik' ]
         ]);
     }
 }

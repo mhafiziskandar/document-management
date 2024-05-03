@@ -14,43 +14,24 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::insert([
-            [
-                'name' => 'Penduduk'
-            ], [
-                'name' => 'Kelab & Persatuan'
-            ], [
-                'name' => 'Pendidikan & Kemahiran'
-            ], [
-                'name' => 'Kesihatan'
-            ], [
-                'name' => 'Sukarelawan'
-            ], [
-                'name' => 'Gejala Sosial'
-            ], [
-                'name' => 'Sukan & Rekreasi'
-            ], [
-                'name' => 'Pengantarabangsaaan'
-            ], [
-                'name' => 'Kepimpinan'
-            ], [
-                'name' => 'Media & Teknologi'
-            ], [
-                'name' => 'Sosialisasi Politik'
-            ], [
-                'name' => 'Pembangunan Belia Positif'
-            ], [
-                'name' => 'Ekonomi'
-            ], [
-                'name' => 'Guna Tenaga'
-            ], [
-                'name' => 'Covid-19'
-            ], [
-                'name' => 'Fasiliti & Kemudahan'
-            ], [
-                'name' => 'Industri Sukan'
-            ], [
-                'name' => 'Lain-lain'
-            ]
+            [ 'name' => 'Penduduk' ], 
+            [ 'name' => 'Kelab & Persatuan' ], 
+            [ 'name' => 'Pendidikan & Kemahiran' ], 
+            [ 'name' => 'Kesihatan'], 
+            [ 'name' => 'Sukarelawan' ], 
+            [ 'name' => 'Gejala Sosial' ], 
+            [ 'name' => 'Sukan & Rekreasi' ], 
+            [ 'name' => 'Pengantarabangsaaan'], 
+            [ 'name' => 'Kepimpinan'], 
+            [ 'name' => 'Media & Teknologi' ], 
+            [ 'name' => 'Sosialisasi Politik' ], 
+            [ 'name' => 'Pembangunan Belia Positif' ], 
+            [ 'name' => 'Ekonomi' ], 
+            [ 'name' => 'Guna Tenaga'], 
+            [ 'name' => 'Covid-19' ], 
+            [ 'name' => 'Fasiliti & Kemudahan' ], 
+            [ 'name' => 'Industri Sukan' ], 
+            [ 'name' => 'Lain-lain']
         ]);
     }
 }

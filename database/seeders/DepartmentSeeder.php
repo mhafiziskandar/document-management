@@ -14,25 +14,15 @@ class DepartmentSeeder extends Seeder
     public function run(): void
     {
         Department::insert([
-            [
-                'name' => 'human resource/Admin'
-            ], [
-                'name' => 'legal'
-            ], [
-                'name' => 'public relation'
-            ], [
-                'name' => 'sales'
-            ], [
-                'name' => 'software'
-            ], [
-                'name' => 'technical'
-            ], [
-                'name' => 'finance'
-            ], [
-                'name' => 'customer care'
-            ], [
-                'name' => 'credit management'
-            ]
+            [ 'name' => 'Human Resource/Admin' ], 
+            [ 'name' => 'Legal' ], 
+            [ 'name' => 'Public Relation' ], 
+            [ 'name' => 'Sales' ], 
+            [ 'name' => 'Software' ], 
+            [ 'name' => 'Technical' ], 
+            [ 'name' => 'Finance' ], 
+            [ 'name' => 'Customer Care' ], 
+            [ 'name' => 'Credit Management' ]
         ]);
     }
 }

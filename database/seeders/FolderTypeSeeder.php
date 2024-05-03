@@ -14,21 +14,13 @@ class FolderTypeSeeder extends Seeder
     public function run(): void
     {
         FolderType::insert([
-            [
-                'name' => 'Data'
-            ], [
-                'name' => 'Manual'
-            ], [
-                'name' => 'Laporan'
-            ], [
-                'name' => 'Pautan Artikel'
-            ], [
-                'name' => 'Instrumen'
-            ], [
-                'name' => 'Kertas Konsep'
-            ], [
-                'name' => 'Keratan Akhbar'
-            ]
+            [ 'name' => 'Data' ], 
+            [ 'name' => 'Manual' ], 
+            [ 'name' => 'Laporan' ], 
+            [ 'name' => 'Pautan Artikel' ], 
+            [ 'name' => 'Instrumen' ], 
+            [ 'name' => 'Kertas Konsep' ], 
+            [ 'name' => 'Keratan Akhbar' ]
         ],);
     }
 }
