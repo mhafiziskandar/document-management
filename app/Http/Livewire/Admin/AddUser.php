@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Department;
 use Livewire\Component;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -9,9 +10,9 @@ use Spatie\Permission\Models\Role;
 class AddUser extends Component
 {
     public $isVisible = false;
-    public $name, $email, $ic_no, $password, $department, $role;
+    public $name, $email, $ic_no, $password, $department_id, $role;
 
-    public $departments = ['IT', 'HR', 'Finance', 'Marketing'];
+    public $departments;
     public $roles = ['Admin', 'Member'];
 
     public function openModal()
@@ -32,7 +33,7 @@ class AddUser extends Component
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'ic_no' => 'required|string|max:255',
-            'department' => 'required|string',
+            'department_id' => 'required|exists:departments,id',
             'role' => 'required|string',
         ]);
 
@@ -41,7 +42,7 @@ class AddUser extends Component
                 'name' => $this->name,
                 'email' => $this->email,
                 'ic_no' => $this->ic_no,
-                'department' => $this->department,
+                'department_id' => $this->department_id,
             ]);
             $user->password = bcrypt($this->ic_no);
             $user->save();
@@ -55,6 +56,11 @@ class AddUser extends Component
             session()->flash('error', 'Failed to create user: ' . $e->getMessage());
             return;
         }
+    }
+
+    public function mount()
+    {
+        $this->departments = Department::pluck('name', 'id');
     }
 
     public function render()

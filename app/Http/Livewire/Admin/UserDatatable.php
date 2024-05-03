@@ -49,8 +49,8 @@ class UserDatatable extends DataTableComponent
             Column::make("Peranan")->label(function ($row) {
                 return $row->roles->implode('name', ', ');
             }),
-            Column::make("Tarikh Sync", "sync")
-                ->sortable()->searchable(),
+            // Column::make("Tarikh Sync", "sync")
+            //     ->sortable()->searchable(),
             Column::make("Status", "status")->format(function ($value) {
 
                 if ($value == User::APPROVED) {

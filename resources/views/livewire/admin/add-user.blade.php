@@ -32,12 +32,12 @@
                         </div>
                         <div class="form-group">
                             <label for="department">Department</label>
-                            <select class="form-control" id="department" wire:model="department">
-                                @foreach ($departments as $department)
-                                    <option value="{{ $department }}">{{ $department }}</option>
+                            <select class="form-control" id="department" wire:model="department_id">
+                                @foreach ($departments as $id => $department)
+                                    <option value="{{ $id }}">{{ $department }}</option>
                                 @endforeach
                             </select>
-                            @error('department') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('department_id') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="role">Role</label>

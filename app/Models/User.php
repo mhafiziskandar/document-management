@@ -36,7 +36,8 @@ class User extends Authenticatable
         'ic_no',
         'status',
         'sync',
-        'is_email_valid'
+        'is_email_valid',
+        'department_id'
     ];
 
     /**
