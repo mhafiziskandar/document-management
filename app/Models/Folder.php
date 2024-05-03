@@ -111,4 +111,19 @@ class Folder extends Model
     {
         return $this->belongsTo(Cluster::class)->withTrashed();
     }
+
+    public function folderable()
+    {
+        return $this->morphTo();
+    }
+
+    public function departments()
+    {
+        return $this->morphedToMany(Department::class, 'folderable');
+    }
+
+    public function folders()
+    {
+        return $this->morphToMany(Folder::class, 'folderable');
+    }
 }

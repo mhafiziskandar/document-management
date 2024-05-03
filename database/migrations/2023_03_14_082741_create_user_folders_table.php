@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_folders', function (Blueprint $table) {
+        Schema::create('folderables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('folderable_id');
+            $table->string('folderable_type')->after('folderable_id');
             $table->unsignedBigInteger('folder_id');
             $table->timestamps();
         });
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_folders');
+        Schema::dropIfExists('folderables');
     }
 };

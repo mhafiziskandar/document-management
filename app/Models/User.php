@@ -64,9 +64,14 @@ class User extends Authenticatable
         return !is_null($value) ? Carbon::parse($value)->setTimezone("Asia/Kuala_Lumpur")->format("j M Y, g:i A") : null;
     }
 
+    // public function folders()
+    // {
+    //     return $this->belongsToMany(Folder::class, 'user_folders');
+    // }
+
     public function folders()
     {
-        return $this->belongsToMany(Folder::class, 'user_folders');
+        return $this->morphMany(Folder::class, 'folderable');
     }
 
     public function extensions()
