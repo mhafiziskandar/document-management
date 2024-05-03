@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('folderables', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('folderable_id');
-            $table->string('folderable_type')->after('folderable_id');
+            $table->string('folderable_type');
             $table->unsignedBigInteger('folder_id');
             $table->timestamps();
         });
