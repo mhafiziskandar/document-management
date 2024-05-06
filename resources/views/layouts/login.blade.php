@@ -82,12 +82,12 @@ License: For each use you must have a valid license purchased only from above li
                 <!--begin::Aside-->
                 <div class="d-flex flex-center flex-lg-start flex-column">
                     <!--begin::Logo-->
-                    <a href="">
+                    {{-- <a href="">
                         <img alt="Logo" src="{{ asset('assets_admin/media/logos/logo-hub-data-2.png') }}" />
-                    </a>
+                    </a> --}}
                     <!--end::Logo-->
                     <!--begin::Title-->
-                    <h2 class="text-white fw-normal m-0 mt-10">Repositori Dokumen, Data dan Penerbitan <br>Institut Penyelidikan Pembangunan Belia Malaysia</h2>
+                    {{-- <h2 class="text-white fw-normal m-0 mt-10">Repositori Dokumen, Data dan Penerbitan <br>Institut Penyelidikan Pembangunan Belia Malaysia</h2> --}}
                     <!--end::Title-->
                 </div>
                 <!--begin::Aside-->
