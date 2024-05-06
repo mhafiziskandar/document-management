@@ -49,7 +49,13 @@ class AddUser extends Component
                 $user->syncRoles([$this->role]);
             }
 
+            $this->emit('userAdded');
             $this->closeModal();
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'success',
+                'title' => 'Great!',
+                'text' => 'User Created!'
+            ]);
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to create user: ' . $e->getMessage());
             return;

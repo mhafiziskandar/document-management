@@ -14,7 +14,7 @@ class UserDatatable extends DataTableComponent
 {
     protected $model = User::class;
 
-    protected $listeners = ['storeUser', 'updateTable', 'updateUserDatatable'];
+    protected $listeners = ['storeUser', 'updateTable', 'updateUserDatatable', 'userAdded' => '$refresh'];
 
     public array $bulkActions = [
         'approved' => 'Terima',
