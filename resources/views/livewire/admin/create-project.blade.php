@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="mb-6 row">
-            <label class="col-lg-4 col-form-label required fw-bold fs-6">Pengguna</label>
+            <label class="col-lg-4 col-form-label fw-bold fs-6">Pengguna</label>
             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                 <select id="userSelect" wire:model="selectedUsers" multiple class="form-select form-select-lg form-select-solid" data-placeholder="Select users" data-allow-clear="true">
                     @foreach ($users as $user)

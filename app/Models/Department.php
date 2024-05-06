@@ -13,6 +13,6 @@ class Department extends Model
 
     public function folders()
     {
-        return $this->morphMany(Folder::class, 'folderable');
+        return $this->morphToMany(Folder::class, 'folderable', 'folderables');
     }
 }

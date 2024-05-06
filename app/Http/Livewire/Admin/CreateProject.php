@@ -35,15 +35,17 @@ class CreateProject extends Component
             ->get();
     }
 
-    protected function rules()
+    public function saveProject()
     {
-        return [
+        // Define validation rules within the saveProject method
+        $validatedData = $this->validate([
             'projectName' => 'required|string|min:5|unique:folders,project_name',
             'description' => 'required|string|min:10',
             'year' => 'required|numeric',
             'isTrackable' => 'required|in:'.Folder::YA.','.Folder::TIDAK,
             'kluster' => 'required',
-            'selectedUsers' => 'required|array',
+            'selectedDepartments' => 'required|array',
+            'selectedUsers' => 'nullable|array',
             'selectedUsers.*' => [
                 'integer',
                 Rule::exists('users', 'id'),
@@ -54,13 +56,9 @@ class CreateProject extends Component
                 Rule::exists('folder_types', 'id'),
             ],
             'endDate' => 'required|date',
-        ];
-    }
+        ]);
 
-    public function saveProject()
-    {
-        $validatedData = $this->validate();
-
+        // Create the project
         $project = Folder::create([
             'cluster_id' => $this->kluster,
             'project_name' => $this->projectName,
@@ -72,24 +70,48 @@ class CreateProject extends Component
             'is_trackable' => $this->isTrackable,
         ]);
 
+        // Ensure the folder directory exists
         if (!Storage::disk('public')->exists($this->projectName)) {
             Storage::disk('public')->makeDirectory($this->projectName);
         }
 
+        // Attach folder types
         $project->types()->attach($this->selectedFolderTypes);
-        $project->users()->attach($this->selectedUsers);
 
-        $users = User::whereIn('id', $this->selectedUsers)->get();
+        // Assign to departments or specific users
+        if (empty($this->selectedUsers)) {
+            // If no specific users are selected, assign to all departments
+            $project->departments()->attach($this->selectedDepartments);
 
-        foreach ($users as $user) {
-            activity()
-                ->causedBy(auth()->id())
-                ->performedOn($project)
-                ->event('assign user')
-                ->log($user->name . ' has been assigned to this project ' . $project->project_name);
+            $departmentUsers = User::whereIn('department_id', $this->selectedDepartments)
+                ->whereNot('status', User::REJECT)
+                ->get();
+
+            foreach ($departmentUsers as $user) {
+                activity()
+                    ->causedBy(auth()->id())
+                    ->performedOn($project)
+                    ->event('assign user')
+                    ->log($user->name . ' has been assigned to this project ' . $project->project_name);
+            }
+
+            Notification::send($departmentUsers, new UserAssign($project));
+        } else {
+            // Assign to specific users
+            $project->users()->attach($this->selectedUsers);
+
+            $users = User::whereIn('id', $this->selectedUsers)->get();
+
+            foreach ($users as $user) {
+                activity()
+                    ->causedBy(auth()->id())
+                    ->performedOn($project)
+                    ->event('assign user')
+                    ->log($user->name . ' has been assigned to this project ' . $project->project_name);
+            }
+
+            Notification::send($users, new UserAssign($project));
         }
-
-        Notification::send($users, new UserAssign($project));
 
         Alert::success('Berjaya', 'Projek berjaya ditambah!');
         return redirect()->route('admin.projects.index');
