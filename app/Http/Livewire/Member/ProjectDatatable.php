@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Member;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Folder;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
@@ -82,9 +83,20 @@ class ProjectDatatable extends DataTableComponent
 
     public function builder(): Builder
     {
-        $folderIds = auth()->user()->folders->pluck('id')->toArray();
+        $user = auth()->user();
+        $departmentId = $user->department_id;
 
-        return Folder::select('folders.*')->with(['users', 'types', 'cluster'])->whereIn('folders.id', $folderIds);
+        $userFolderIds = $user->folders->pluck('id');
+
+        $departmentFolderIds = Folder::whereHas('departments', function (Builder $query) use ($departmentId) {
+            $query->where('departments.id', $departmentId);
+        })->pluck('id');
+
+        $folderIds = $userFolderIds->merge($departmentFolderIds)->unique();
+
+        return Folder::select('folders.*')
+            ->with(['users', 'types', 'cluster'])
+            ->whereIn('folders.id', $folderIds);
     }
 
     public function filters(): array
@@ -131,11 +143,12 @@ class ProjectDatatable extends DataTableComponent
         $this->dispatchBrowserEvent('closeLivewireModal');
     }
 
-    protected function getTrackableBadge($isTrackable) {
+    protected function getTrackableBadge($isTrackable)
+    {
         $badgeClass = $isTrackable ? 'badge-success' : 'badge-danger';
         $badgeText = $isTrackable ? 'Trackable' : 'Non-trackable';
         $style = 'font-size: 0.8rem; padding: 0.2em 0.4em;';
-        
+
         return '<span class="badge ' . $badgeClass . '" style="' . $style . '">' . $badgeText . '</span>';
     }
 }
