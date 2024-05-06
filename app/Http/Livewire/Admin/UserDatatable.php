@@ -36,8 +36,8 @@ class UserDatatable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "user_id")
-                ->sortable(),
+            // Column::make("Id", "id")
+            //     ->sortable(),
             Column::make("Name", "name")->format(function ($value) {
                 return ucwords(strtolower($value));
             })

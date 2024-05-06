@@ -99,7 +99,7 @@ class Folder extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_folders');
+        return $this->morphedByMany(User::class, 'folderable', 'folderables');
     }
 
     public function types()
@@ -112,18 +112,13 @@ class Folder extends Model
         return $this->belongsTo(Cluster::class)->withTrashed();
     }
 
-    public function folderable()
-    {
-        return $this->morphTo();
-    }
-
     public function departments()
     {
-        return $this->morphedToMany(Department::class, 'folderable');
+        return $this->morphedByMany(Department::class, 'folderable', 'folderables');
     }
 
     public function folders()
     {
-        return $this->morphToMany(Folder::class, 'folderable');
+        return $this->morphedByMany(Folder::class, 'folderable', 'folderables');
     }
 }

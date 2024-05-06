@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cluster;
+use App\Models\Department;
 use App\Models\File;
 use App\Models\Folder;
 use App\Models\FolderType;
@@ -25,11 +26,12 @@ class FolderController extends Controller
 
     public function create()
     {
-        $foldertypes = FolderType::all();
-        $users = User::whereNot("status", User::REJECT)->get();
-        $categories = Cluster::all();
+        // $foldertypes = FolderType::all();
+        // $users = User::whereNot("status", User::REJECT)->get();
+        // $departments = Department::all();
+        // $categories = Cluster::all();
 
-        return view('project.create', compact('foldertypes', 'users', 'categories'));
+        return view('project.create');
     }
 
     public function store(Request $request)

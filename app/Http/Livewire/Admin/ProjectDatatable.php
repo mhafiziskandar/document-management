@@ -111,11 +111,13 @@ class ProjectDatatable extends DataTableComponent
 
     public function builder(array $test = null): Builder
     {
-        return Folder::select('folders.*')->with(['users', 'types', 'cluster'])->when(!is_null($test), function($query) use ($test){
-            $query->whereHas('users', function ($query) use ($test) {
-                $query->whereIn('users.id', $test);
+        return Folder::select('folders.*')
+            ->with(['users', 'types', 'cluster'])
+            ->when(!is_null($test), function ($query) use ($test) {
+                $query->whereHas('users', function ($query) use ($test) {
+                    $query->whereIn('users.id', $test);
+                });
             });
-        });
     }
 
     public function change_country($test)

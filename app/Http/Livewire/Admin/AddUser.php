@@ -27,8 +27,6 @@ class AddUser extends Component
 
     public function saveUser()
     {
-        // dd($this->name, $this->email);
-
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',

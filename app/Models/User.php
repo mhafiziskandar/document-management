@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,11 +20,6 @@ class User extends Authenticatable
     CONST DELETE = 'Tidak Aktif';
     CONST PENDING = 'Dalam Proses';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'user_id',
         'name',
@@ -40,21 +33,11 @@ class User extends Authenticatable
         'department_id'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -64,14 +47,9 @@ class User extends Authenticatable
         return !is_null($value) ? Carbon::parse($value)->setTimezone("Asia/Kuala_Lumpur")->format("j M Y, g:i A") : null;
     }
 
-    // public function folders()
-    // {
-    //     return $this->belongsToMany(Folder::class, 'user_folders');
-    // }
-
     public function folders()
     {
-        return $this->morphMany(Folder::class, 'folderable');
+        return $this->morphToMany(Folder::class, 'folderable', 'folderables');
     }
 
     public function extensions()

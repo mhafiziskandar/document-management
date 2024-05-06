@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             FolderTypeSeeder::class,
-            ClusterSeeder::class
+            ClusterSeeder::class,
+            DepartmentSeeder::class
         ]);
     }
 }
