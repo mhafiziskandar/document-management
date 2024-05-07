@@ -7,6 +7,7 @@ use App\Models\Cluster;
 use App\Models\Department;
 use App\Models\File;
 use App\Models\Folder;
+use App\Models\Folderables;
 use App\Models\FolderType;
 use App\Models\User;
 use App\Notifications\UserAssign;
@@ -104,12 +105,13 @@ class FolderController extends Controller
         // Store the previous URL (or the fallback) in the session.
         session(['previous_url' => $previousUrl]);
 
-        $folder->load('cluster', 'users', 'types');
+        $folder->load('cluster', 'users', 'types', 'folders');
         $foldertypes = FolderType::all();
         $users = User::whereNot("status", User::REJECT)->get();
+        $departments = Department::all();
         $categories = Cluster::all();
 
-        return view('project.edit', compact('folder', 'foldertypes', 'users', 'categories'));
+        return view('project.edit', compact('folder', 'foldertypes', 'users', 'categories','departments'));
     }
 
     public function update(Request $request, Folder $folder)
@@ -186,6 +188,8 @@ class FolderController extends Controller
 
         $folder->types()->sync($request->folder_types);
 
+        $folder->folders()->sync($request->departments);
+        
         $usr = $folder->users;
 
         $users = User::whereIn('id', $request->users)->get();

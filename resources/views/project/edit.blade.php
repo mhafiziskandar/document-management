@@ -69,6 +69,26 @@
                 <!--end::Col-->
             </div>
             <!--end::Input group-->
+            <div class="mb-6 row">
+                <!--begin::Label-->
+                <label class="col-lg-4 col-form-label required fw-bold fs-6">Departments</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                    <select name="departments[]" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="Select departments" data-allow-clear="true" multiple="multiple">
+                        <option></option>
+                        @foreach ($departments as $department)
+                            <option value="{{ $department->id }}" {{ in_array($department->id, old('departments', $folder->departments->folderable_id)) ? 'selected' : '' }}>
+                                {{ $department->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('departments')
+                        <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <!--end::Col-->
+            </div>
             <!--begin::Input group-->
             <div class="mb-6 row">
                 <!--begin::Label-->
