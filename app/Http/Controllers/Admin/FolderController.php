@@ -97,21 +97,13 @@ class FolderController extends Controller
     {
         $previousUrl = url()->previous();
 
-        // If the previous URL was the login page, set a default fallback URL.
         if ($previousUrl == route('login')) {
             $previousUrl = route('admin.projects.index');
         }
 
-        // Store the previous URL (or the fallback) in the session.
         session(['previous_url' => $previousUrl]);
 
-        $folder->load('cluster', 'users', 'types', 'folders');
-        $foldertypes = FolderType::all();
-        $users = User::whereNot("status", User::REJECT)->get();
-        $departments = Department::all();
-        $categories = Cluster::all();
-
-        return view('project.edit', compact('folder', 'foldertypes', 'users', 'categories','departments'));
+        return view('project.edit', compact('folder'));
     }
 
     public function update(Request $request, Folder $folder)
