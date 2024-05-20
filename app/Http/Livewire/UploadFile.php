@@ -69,8 +69,8 @@ class UploadFile extends Component
             'description' => 'required|min:5|string',
             'privacy' => 'required',
             'can_download' => 'required',
-            'classification' => 'required',
-            'category' => 'required|array',
+            // 'classification' => 'required',
+            // 'category' => 'required|array',
             'category.*' => [
                 'integer'
             ],

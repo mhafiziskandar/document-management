@@ -27,7 +27,7 @@
                 @enderror
             </div>
         </div>
-        <div class="mb-6 row">
+        {{-- <div class="mb-6 row">
             <label class="col-lg-4 col-form-label required fw-bold fs-6">Kluster</label>
             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                 <select wire:model="kluster" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="Pilih Kluster" data-allow-clear="true">
@@ -42,7 +42,7 @@
                     <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
+        </div> --}}
         <div class="mb-6 row">
             <label class="col-lg-4 col-form-label required fw-bold fs-6">Departments</label>
             <div class="col-lg-8">
@@ -85,7 +85,7 @@
                 @enderror
             </div>
         </div>
-        <div class="mb-6 row">
+        {{-- <div class="mb-6 row">
             <label class="col-lg-12 col-form-label required fw-bolder fs-6">Jenis Dokumen Diperlukan</label>
             <div class="row">
                 @foreach ($foldertypes as $key => $type)
@@ -102,7 +102,7 @@
             @error('selectedFolderTypes')
                 <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
             @enderror
-        </div>
+        </div> --}}
         <div class="mb-6 row">
             <label class="col-lg-4 col-form-label required fw-bolder fs-6">Tarikh Akhir</label>
             <div class="col-lg-8 fv-row fv-plugins-icon-container">

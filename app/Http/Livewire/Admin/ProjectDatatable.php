@@ -75,8 +75,8 @@ class ProjectDatatable extends DataTableComponent
 
                     return ucwords(strtolower(implode(", ", $allUsersAndDepartments)));
                 }),
-            Column::make("Kluster", "cluster.name")->sortable()->searchable(),
-            Column::make("Jenis Fail")->label(fn ($row) => $row->types()->implode("name", ", ")),
+            // Column::make("Kluster", "cluster.name")->sortable()->searchable(),
+            // Column::make("Jenis Fail")->label(fn ($row) => $row->types()->implode("name", ", ")),
             Column::make("Tahun", "year")->sortable()->searchable(),
             Column::make("Tempoh Muatnaik", "status_date")->format(function ($value) {
 
@@ -160,12 +160,12 @@ class ProjectDatatable extends DataTableComponent
                 ])->filter(function (Builder $builder, string $value) {
                     $builder->where('folders.status_date', $value);
                 }),
-            SelectFilter::make('Kluster')
-                ->options([
-                    '' => 'Any',
-                ] + Cluster::pluck('name', 'id')->toArray())->filter(function (Builder $builder, string $value) {
-                    $builder->where('folders.cluster_id', $value);
-                }),
+            // SelectFilter::make('Kluster')
+            //     ->options([
+            //         '' => 'Any',
+            //     ] + Cluster::pluck('name', 'id')->toArray())->filter(function (Builder $builder, string $value) {
+            //         $builder->where('folders.cluster_id', $value);
+            //     }),
             SelectFilter::make('Tahun')
                 ->options([
                     '' => 'Any',
@@ -210,19 +210,19 @@ class ProjectDatatable extends DataTableComponent
                         $query->whereIn('users.id', $value);
                     });
                 }),
-            MultiSelectFilter::make('Jenis Fail')
-                ->options(
-                    FolderType::query()
-                        ->orderBy('name')
-                        ->get()
-                        ->keyBy('id')
-                        ->map(fn ($type) => $type->name)
-                        ->toArray()
-                )->filter(function (Builder $builder, array $value) {
-                    $builder->whereHas('types', function ($query) use ($value) {
-                        $query->whereIn('folder_types.id', $value);
-                    });
-                }),                       
+            // MultiSelectFilter::make('Jenis Fail')
+            //     ->options(
+            //         FolderType::query()
+            //             ->orderBy('name')
+            //             ->get()
+            //             ->keyBy('id')
+            //             ->map(fn ($type) => $type->name)
+            //             ->toArray()
+            //     )->filter(function (Builder $builder, array $value) {
+            //         $builder->whereHas('types', function ($query) use ($value) {
+            //             $query->whereIn('folder_types.id', $value);
+            //         });
+            //     }),                       
         ];
     }
 

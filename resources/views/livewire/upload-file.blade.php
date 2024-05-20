@@ -176,7 +176,7 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
-                        <div class="mb-6 row">
+                        {{-- <div class="mb-6 row">
                             <!--begin::Label-->
                             <label class="col-lg-3 col-form-label required fw-bold fs-6">Klasifikasi</label>
                             <!--end::Label-->
@@ -196,10 +196,10 @@
                                 @enderror
                             </div>
                             <!--end::Col-->
-                        </div>
+                        </div> --}}
                         <!--end::Input group-->
                         <!--begin::Input group-->
-                        <div class="mb-6 row">
+                        {{-- <div class="mb-6 row">
                             <!--begin::Label-->
                             <label class="col-lg-3 col-form-label required fw-bold fs-6">Kategori</label>
                             <!--end::Label-->
@@ -223,7 +223,7 @@
                                 @enderror
                             </div>
                             <!--end::Col-->
-                        </div>
+                        </div> --}}
                         <!--end::Input group-->
                     </div>
                 </div>

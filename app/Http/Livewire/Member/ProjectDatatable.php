@@ -52,8 +52,8 @@ class ProjectDatatable extends DataTableComponent
 
                     return ucwords(strtolower(implode(", ", $allUsersAndDepartments)));
                 }),
-            Column::make("Kluster", "cluster.name")->sortable()->searchable(),
-            Column::make("Jenis Fail")->label(fn ($row) => $row->types()->implode("name", ", ")),
+            // Column::make("Kluster", "cluster.name")->sortable()->searchable(),
+            // Column::make("Jenis Fail")->label(fn ($row) => $row->types()->implode("name", ", ")),
             Column::make("Tahun", "year")->sortable()->searchable(),
             Column::make("Tempoh Muatnaik", "status_date")->format(function ($value) {
 

@@ -43,14 +43,14 @@ class CreateProject extends Component
             'description' => 'required|string|min:10',
             'year' => 'required|numeric',
             'isTrackable' => 'required|in:'.Folder::YA.','.Folder::TIDAK,
-            'kluster' => 'required',
+            // 'kluster' => 'required',
             'selectedDepartments' => 'required|array',
             'selectedUsers' => 'nullable|array',
             'selectedUsers.*' => [
                 'integer',
                 Rule::exists('users', 'id'),
             ],
-            'selectedFolderTypes' => 'required|array',
+            // 'selectedFolderTypes' => 'required|array',
             'selectedFolderTypes.*' => [
                 'integer',
                 Rule::exists('folder_types', 'id'),
