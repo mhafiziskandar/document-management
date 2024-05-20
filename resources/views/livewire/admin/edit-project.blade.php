@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <div class="mb-6 row">
+        {{-- <div class="mb-6 row">
             <label class="col-lg-12 col-form-label required fw-bolder fs-6">Jenis Dokumen Diperlukan</label>
             <div class="row">
                 @foreach ($foldertypes as $key => $type)
@@ -108,7 +108,7 @@
             @error('selectedFolderTypes')
                 <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
             @enderror
-        </div>
+        </div> --}}
 
         <div class="mb-6 row">
             <label class="col-lg-4 col-form-label required fw-bolder fs-6">Tarikh Akhir</label>

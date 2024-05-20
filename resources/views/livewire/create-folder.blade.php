@@ -132,7 +132,7 @@
                 </div>
                 <!--end::Input group-->
                 <!--begin::Input group-->
-                <div class="mb-6 row">
+                {{-- <div class="mb-6 row">
                     <!--begin::Label-->
                     <label class="col-lg-12 col-form-label fw-bolder fs-6">Jenis Dokumen Diperlukan</label>
                     <!--end::Label-->
@@ -151,7 +151,7 @@
                         @endforeach
                         <!--end::Col-->
                     </div>
-                </div>
+                </div> --}}
                 <!--end::Input group-->
             </div>
             <div class="card-footer">

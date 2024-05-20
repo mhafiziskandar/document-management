@@ -25,9 +25,9 @@ class UploadFile extends Component
 
         $this->folderTypes = FolderType::all();
 
-        $this->type = $folder->types->first()->id;
+        // $this->type = $folder->types->first()->id;
 
-        $this->jenis = $folder->types->first()->type;
+        // $this->jenis = $folder->types->first()->type;
     }
 
     public function render()

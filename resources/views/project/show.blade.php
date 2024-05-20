@@ -83,7 +83,7 @@
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->
-                                    {{ $folder->cluster->name }}
+                                    {{-- {{ $folder->cluster->name }} --}}
                                 </a>
 
                             </div>
