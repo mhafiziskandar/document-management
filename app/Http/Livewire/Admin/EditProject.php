@@ -34,7 +34,7 @@ class EditProject extends Component
         $this->projectName = $folder->project_name;
         $this->description = $folder->description;
         $this->year = $folder->year;
-        $this->kluster = $folder->cluster->id;
+        // $this->kluster = $folder->cluster->id;
         $this->selectedDepartments = $folder->departments->pluck('id')->toArray();
         $this->selectedUsers = $folder->users->pluck('id')->toArray();
         $this->isTrackable = $folder->is_trackable;
