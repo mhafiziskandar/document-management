@@ -104,7 +104,7 @@
                             <!--begin::Label-->
                             <label class="col-lg-3 col-form-label required fw-bold fs-6">Kerahsiaan
                                 <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                    title="Umum: Boleh dipaparkan kepada semua pengguna IYRES. Sulit: Hanya dipaparkan untuk ahli pasukan projek sahaja.">
+                                    title="Umum: Boleh dipaparkan kepada semua pengguna sistem. Sulit: Hanya dipaparkan untuk ahli projek sahaja.">
                                     <i class="fa-sharp fa-solid fa-circle-info text-primary ms-1"></i>
                                 </span>
                             </label>
@@ -152,7 +152,7 @@
                         <div class="mb-6 row">
                             <!--begin::Label-->
                             <label class="col-lg-3 col-form-label required fw-bold fs-6">Muat Turun
-                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Menentukan samada dokumen ini BOLEH dimuat turun oleh pengguna IYRES yang lain atau pun TIDAK.">
+                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Menentukan samada dokumen ini BOLEH dimuat turun oleh pengguna sistem yang lain atau pun TIDAK.">
                                     <i class="fa-sharp fa-solid fa-circle-info text-primary ms-1"></i>
                                 </span>
                             </label>

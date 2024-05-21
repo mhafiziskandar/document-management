@@ -88,7 +88,7 @@
                         <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-gray-400 fw-semibold me-1">{{ date('Y') }} ©</span>
-                            <a href="javascript:void;" target="_blank" class="text-muted text-hover-primary fw-semibold me-2 fs-6">Iyres Hub Data</a>
+                            <a href="javascript:void;" target="_blank" class="text-muted text-hover-primary fw-semibold me-2 fs-6">File Management</a>
                         </div>
                         <!--end::Copyright-->
                     </div>
