@@ -27,7 +27,7 @@
                 @enderror
             </div>
         </div>
-        <div class="mb-6 row">
+        {{-- <div class="mb-6 row">
             <label class="col-lg-4 col-form-label required fw-bold fs-6">Kluster</label>
             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                 <select wire:model="kluster" class="form-select form-select-lg form-select-solid" id="klusterSelect">
@@ -42,7 +42,7 @@
                     <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
+        </div> --}}
 
         {{-- Departments --}}
         <div class="mb-6 row">

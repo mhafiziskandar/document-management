@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class EditProject extends Component
 {
@@ -61,19 +62,16 @@ class EditProject extends Component
             'description' => 'required|string|min:10',
             'year' => 'required|integer',
             'isTrackable' => 'required|in:' . Folder::YA . ',' . Folder::TIDAK,
-            'kluster' => 'required|exists:categories,id',
-            'selectedDepartments' => 'sometimes|required|array',
-            'selectedFolderTypes' => [
-                'required',
-                'array',
-                Rule::exists('folder_types', 'id'),
-            ],
+            // 'kluster' => 'required|exists:categories,id',
+            'selectedDepartments' => 'sometimes|array',
+            'selectedUsers' => $this->hasUsers ? 'required|array' : 'sometimes|array',
+            // 'selectedFolderTypes' => [
+            //     'required',
+            //     'array',
+            //     Rule::exists('folder_types', 'id'),
+            // ],
             'endDate' => 'required|date',
         ];
-
-        if ($this->hasUsers) {
-            $validationRules['selectedUsers'] = 'required|array';
-        }
 
         // Validate Input
         $validatedData = $this->validate($validationRules);
@@ -121,7 +119,7 @@ class EditProject extends Component
         // Update Folder
         $this->folder->update([
             'project_name' => $validatedData['projectName'],
-            'cluster_id' => $validatedData['kluster'],
+            // 'cluster_id' => $validatedData['kluster'],
             'description' => $validatedData['description'],
             'bil' => (string)$this->folder->id . "/" . $validatedData['year'],
             'year' => $validatedData['year'],
@@ -131,73 +129,70 @@ class EditProject extends Component
         ]);
 
         // Sync Folder Types
-        $this->folder->types()->sync($validatedData['selectedFolderTypes']);
+        // $this->folder->types()->sync($validatedData['selectedFolderTypes']);
 
-        // Sync Departments without duplication
-        $existingDepartments = $this->folder->folders()
-            ->wherePivot('folderable_type', Department::class)
-            ->pluck('folderable_id')
+        // Fetch current department IDs associated with the folder
+        $currentDepartmentIds = Department::join('folderables', 'departments.id', '=', 'folderables.folderable_id')
+            ->where('folderables.folderable_type', '=', 'App\Models\Department')
+            ->where('folderables.folder_id', '=', $this->folder->id)
+            ->pluck('departments.id')
             ->toArray();
 
-        $toAttachDepartments = array_diff($validatedData['selectedDepartments'], $existingDepartments);
-        $toDetachDepartments = array_diff($existingDepartments, $validatedData['selectedDepartments']);
+        // Get department IDs from validated data
+        $departmentIds = $validatedData['selectedDepartments'] ?? [];
 
-        // Detach old departments
-        $this->folder->folders()
-            ->wherePivot('folderable_type', Department::class)
-            ->detach($toDetachDepartments);
+        // Determine which departments to detach and attach for logging
+        $toDetachDepartments = array_diff($currentDepartmentIds, $departmentIds);
+        $toAttachDepartments = array_diff($departmentIds, $currentDepartmentIds);
 
-        // Attach new departments
-        $departmentSyncData = [];
-        foreach ($toAttachDepartments as $departmentId) {
-            $departmentSyncData[$departmentId] = ['folderable_type' => Department::class];
+        // Sync departments
+        $this->folder->departments()->sync($departmentIds);
+
+        // Logging for departments
+        foreach ($toAttachDepartments as $deptId) {
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($this->folder)
+                ->event('assign department')
+                ->log("Department ID {$deptId} has been assigned to this project " . $this->folder->project_name);
         }
-        $this->folder->folders()->syncWithoutDetaching($departmentSyncData);
 
-        // Sync Users if required, without duplication
-        if ($this->hasUsers && isset($validatedData['selectedUsers'])) {
-            $existingUsers = $this->folder->folders()
-                ->wherePivot('folderable_type', User::class)
-                ->pluck('folderable_id')
-                ->toArray();
+        foreach ($toDetachDepartments as $deptId) {
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($this->folder)
+                ->event('remove department')
+                ->log("Department ID {$deptId} has been removed from this project " . $this->folder->project_name);
+        }
 
-            $toAttachUsers = array_diff($validatedData['selectedUsers'], $existingUsers);
-            $toDetachUsers = array_diff($existingUsers, $validatedData['selectedUsers']);
+        $currentUserIds = $this->folder->users()->pluck('users.id')->toArray();
+        $userIds = $validatedData['selectedUsers'] ?? [];
 
-            // Detach old users
-            $this->folder->folders()
-                ->wherePivot('folderable_type', User::class)
-                ->detach($toDetachUsers);
+        $toDetachUsers = array_diff($currentUserIds, $userIds);
+        $toAttachUsers = array_diff($userIds, $currentUserIds);
 
-            // Attach new users
-            $userSyncData = [];
-            foreach ($toAttachUsers as $userId) {
-                $userSyncData[$userId] = ['folderable_type' => User::class];
-            }
-            $this->folder->folders()->syncWithoutDetaching($userSyncData);
+        $this->folder->users()->sync($userIds);
 
-            // Logging activities for added and removed users
-            foreach (User::whereIn('id', $toAttachUsers)->get() as $data) {
-                activity()
-                    ->causedBy(auth()->id())
-                    ->performedOn($this->folder)
-                    ->event('assign user')
-                    ->log($data->name . ' has been assigned to this project ' . $this->folder->project_name);
-            }
+        // Logging for users
+        foreach ($toAttachUsers as $userId) {
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($this->folder)
+                ->event('assign user')
+                ->log("User ID {$userId} has been assigned to this project " . $this->folder->project_name);
+        }
 
-            foreach (User::whereIn('id', $toDetachUsers)->get() as $data) {
-                activity()
-                    ->causedBy(auth()->id())
-                    ->performedOn($this->folder)
-                    ->event('remove user')
-                    ->log($data->name . ' has been removed from this project ' . $this->folder->project_name);
-            }
+        foreach ($toDetachUsers as $userId) {
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($this->folder)
+                ->event('remove user')
+                ->log("User ID {$userId} has been removed from this project " . $this->folder->project_name);
         }
 
         session()->flash('message', 'Projek berjaya dikemas kini!');
         return redirect($this->previousUrl);
     }
-
 
     public function render()
     {
