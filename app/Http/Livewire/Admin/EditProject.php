@@ -131,41 +131,39 @@ class EditProject extends Component
         // Sync Folder Types
         // $this->folder->types()->sync($validatedData['selectedFolderTypes']);
 
-        // Fetch current department IDs associated with the folder
-        $currentDepartmentIds = Department::join('folderables', 'departments.id', '=', 'folderables.folderable_id')
+        $currentDepartments = Department::join('folderables', 'departments.id', '=', 'folderables.folderable_id')
             ->where('folderables.folderable_type', '=', 'App\Models\Department')
             ->where('folderables.folder_id', '=', $this->folder->id)
-            ->pluck('departments.id')
-            ->toArray();
+            ->pluck('departments.name', 'departments.id');
 
-        // Get department IDs from validated data
         $departmentIds = $validatedData['selectedDepartments'] ?? [];
 
-        // Determine which departments to detach and attach for logging
+        $currentDepartmentIds = $currentDepartments->keys()->toArray();
         $toDetachDepartments = array_diff($currentDepartmentIds, $departmentIds);
         $toAttachDepartments = array_diff($departmentIds, $currentDepartmentIds);
 
-        // Sync departments
         $this->folder->departments()->sync($departmentIds);
 
-        // Logging for departments
         foreach ($toAttachDepartments as $deptId) {
+            $deptName = Department::find($deptId)->name;
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($this->folder)
                 ->event('assign department')
-                ->log("Department ID {$deptId} has been assigned to this project " . $this->folder->project_name);
+                ->log("{$deptName} department has been assigned to this project " . $this->folder->project_name);
         }
 
         foreach ($toDetachDepartments as $deptId) {
+            $deptName = $currentDepartments[$deptId];
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($this->folder)
                 ->event('remove department')
-                ->log("Department ID {$deptId} has been removed from this project " . $this->folder->project_name);
+                ->log("{$deptName} department has been removed from this project " . $this->folder->project_name);
         }
 
-        $currentUserIds = $this->folder->users()->pluck('users.id')->toArray();
+        $currentUsers = $this->folder->users()->pluck('users.name', 'users.id');
+        $currentUserIds = $currentUsers->keys()->toArray();
         $userIds = $validatedData['selectedUsers'] ?? [];
 
         $toDetachUsers = array_diff($currentUserIds, $userIds);
@@ -173,21 +171,22 @@ class EditProject extends Component
 
         $this->folder->users()->sync($userIds);
 
-        // Logging for users
         foreach ($toAttachUsers as $userId) {
+            $userName = User::find($userId)->name;
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($this->folder)
                 ->event('assign user')
-                ->log("User ID {$userId} has been assigned to this project " . $this->folder->project_name);
+                ->log("{$userName} has been assigned to this project " . $this->folder->project_name);
         }
 
         foreach ($toDetachUsers as $userId) {
+            $userName = $currentUsers[$userId];
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($this->folder)
                 ->event('remove user')
-                ->log("User ID {$userId} has been removed from this project " . $this->folder->project_name);
+                ->log("{$userName} has been removed from this project " . $this->folder->project_name);
         }
 
         session()->flash('message', 'Projek berjaya dikemas kini!');
