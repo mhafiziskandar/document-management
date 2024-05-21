@@ -16,7 +16,10 @@ class FolderController extends Controller
 
     public function show(Folder $folder)
     {
-        $folder->load('cluster', 'users', 'types', 'files');
+        $folder->load(['cluster', 'users', 'departments', 'types', 'files']);
+
+        $entityType = $folder->users->isNotEmpty() ? 'users' : 'departments';
+        $entities = $folder->users->isNotEmpty() ? $folder->users : $folder->departments;
 
         $countType = $folder->types->count();
 

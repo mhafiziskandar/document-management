@@ -220,33 +220,36 @@ class FolderController extends Controller
     {
         $previousUrl = url()->previous();
 
-        // If the previous URL was the login page, set a default fallback URL.
+        // Set fallback URL if the previous URL was the login page
         if ($previousUrl == route('login')) {
             $previousUrl = route('admin.projects.index');
         }
-    
-        // Store the previous URL (or the fallback) in the session.
+        
+        // Store the previous URL in the session
         session(['previous_url' => $previousUrl]);
 
-        $folder->load('cluster', 'users', 'types', 'files');
+        // Load necessary relationships
+        $folder->load(['cluster', 'users', 'departments', 'types', 'files']);
 
+        // Determine the type of entities associated with the folder
+        $entityType = $folder->users->isNotEmpty() ? 'users' : 'departments';
+        $entities = $folder->users->isNotEmpty() ? $folder->users : $folder->departments;
+
+        // Calculate progress based on types and files
         $countType = $folder->types->count();
-
         $count = 0;
         foreach ($folder->types as $type) {
-            $check = File::where('status', File::APPROVED)->where('folder_id', $folder->id)->where('folder_type_id', $type->id)->first();
-
+            $check = File::where('status', File::APPROVED)
+                        ->where('folder_id', $folder->id)
+                        ->where('folder_type_id', $type->id)
+                        ->first();
             if ($check) {
                 $count++;
             }
         }
+        $progress = $countType > 0 ? ($count / $countType * 100) : 0;
 
-        if ($count > 0) {
-            $progress = $count / $countType * 100;
-        } else {
-            $progress = 0;
-        }
-
-        return view('project.show', compact('folder', 'progress'));
+        // Return the view with dynamic entity type and list
+        return view('project.show', compact('folder', 'progress', 'entities', 'entityType'));
     }
 }

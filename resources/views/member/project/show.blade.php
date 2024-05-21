@@ -37,7 +37,12 @@
                                             <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor" />
                                         </svg>
                                     </span>
-                                    <!--end::Svg Icon-->{{ $folder->users->implode('name', ', ') }}
+                                    <!--end::Svg Icon-->
+                                    @if($entityType === 'users')
+                                        {{ $entities->isEmpty() ? 'No users assigned' : $entities->pluck('name')->join(', ') }}
+                                    @else
+                                        {{ $entities->isEmpty() ? 'No departments assigned' : $entities->pluck('name')->join(', ') }}
+                                    @endif
                                 </a>
                                 <a href="javascript:void" class="d-flex align-items-center text-gray-800 text-hover-primary me-5 mb-2">
                                     <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2023-03-24-172858/core/html/src/media/icons/duotune/general/gen066.svg-->
