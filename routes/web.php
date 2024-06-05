@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Member\FileController as MemberFileController;
 use App\Http\Controllers\Member\FolderController as MemberFolderController;
+use App\Http\Controllers\Member\UserController as MemberUserController;
 use App\Http\Controllers\ProjectController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
@@ -78,6 +79,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('', [MemberFolderController::class, 'index'])->name('index');
             Route::get('show/{folder:slug}', [MemberFolderController::class, 'show'])->name('show');
         });
+
+        Route::get('/account-settings', [MemberUserController::class, 'accountSettings'])->name('account-settings');
+        Route::post('/update-account', [MemberUserController::class, 'updateAccount'])->name('update-account');
     });
 
     Route::prefix('project')->name('projects.')->group(function () {

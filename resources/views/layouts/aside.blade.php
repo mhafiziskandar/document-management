@@ -406,7 +406,7 @@
                     <!--end::Tab content-->
                     <div class="tab-content">
                         <!--begin::Tab pane-->
-                        <div class="tab-pane fade @if (Route::is('admin.account-settings')) active show @endif" id="accountSetting" role="tabpanel">
+                        <div class="tab-pane fade @if (Route::is('admin.account-settings') || Route::is('member.account-settings')) active show @endif" id="accountSetting" role="tabpanel">
                             <!--begin::Menu-->
                             <div class="menu menu-column menu-fit menu-rounded menu-title-gray-600 menu-icon-gray-400 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-semibold fs-5 px-6 my-5 my-lg-0"
                                 id="kt_aside_menu" data-kt-menu="true">
@@ -414,7 +414,8 @@
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
-                                        <a class="menu-link @if (Route::is('admin.account-settings')) active @endif" href="{{ route('admin.account-settings') }}">
+                                        <a class="menu-link @if (Route::is('admin.account-settings') || Route::is('member.account-settings')) active @endif" 
+                                            href="@role('admin|superadmin') {{ route('admin.account-settings') }} @else {{ route('member.account-settings') }} @endrole">
                                             <span class="menu-icon">
                                                 <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2023-01-30-131017/core/html/src/media/icons/duotune/communication/com014.svg-->
                                                 <span class="svg-icon svg-icon-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

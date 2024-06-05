@@ -81,5 +81,9 @@ Breadcrumbs::for('projects.public.show', function (BreadcrumbTrail $trail, Folde
 });
 
 Breadcrumbs::for('admin.account-settings', function (BreadcrumbTrail $trail) {
-    $trail->push('Tukar Email dan Password', route('admin.account-settings'));
+    $trail->push('Tukar Email/Password', route('admin.account-settings'));
+});
+
+Breadcrumbs::for('member.account-settings', function (BreadcrumbTrail $trail) {
+    $trail->push('Tukar Email/Password', route('member.account-settings'));
 });
