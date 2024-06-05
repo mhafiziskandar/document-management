@@ -49,7 +49,7 @@ class UploadFile extends Component
         $folder = Folder::find($this->folder_id);
         
         $this->file = null;
-        $this->type = $folder->types->first()->id;
+        // $this->type = $folder->types->first()->id;
         $this->description = null;
         $this->is_shareable = null;
         $this->privacy = null;

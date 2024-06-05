@@ -38,6 +38,6 @@ class FolderController extends Controller
             $progress = 0;
         }
 
-        return view('member.project.show', compact('folder', 'progress'));
+        return view('member.project.show', compact('folder', 'progress', 'entities', 'entityType'));
     }
 }
